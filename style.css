@@ -267,6 +267,7 @@ header > * {
     position: fixed;
     bottom: 30px;
     left: 50%;
+    gap: 25px;
     transform: translateX(-50%);
     filter: invert(1);
     background: #e2d9d9;
@@ -274,6 +275,14 @@ header > * {
     width: 70vw;
     min-height: 40px;
     padding: 12px;
+}
+
+.player-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: absolute;
+    right: 20px;
 }
 
 /* BELOW ARE ORIGINAL EXTRA CLASSES (for future JS features) */
