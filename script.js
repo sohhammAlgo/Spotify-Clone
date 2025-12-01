@@ -43,6 +43,11 @@ async function main(){
 function playSong(url) {
     audio.src = url;
     audio.play();
+    let currentSong = songs.find(song => song.file === url);
+    let songTitle = document.querySelector(".song-title");
+    let songArtist = document.querySelector(".song-artist");
+    songTitle.textContent = currentSong.name.replace(".mp3", "");
+    songArtist.textContent = currentSong.artist || "_Artist unknown_";
 }
 
 function songList() {
@@ -55,14 +60,17 @@ function songList() {
         li.innerHTML = `
             <img src="images/music.svg" width="18" alt="">
             <img src="${song.image || 'images/default.jpg'}" width="40" alt="">
-            <span>${song.name.replace(".mp3", "")}</span>
-            <span> - ${song.artist || 'Unknown Artist'}</span>
-            <span class="duration">${duration(song.file)}</span>
+            <div>
+                 <span class="title">${song.name.replace(".mp3", "")}</span>
+                <span class="artist">${song.artist || "_Artist unknown_"}</span>
+            </div>
+            <span class="duration">${song.duration || "0:00"}</span>
         `;
         li.addEventListener("click", () => playSong(song.file));
         ul.appendChild(li);
     });
 }
+
 
 
 function duration(url){
