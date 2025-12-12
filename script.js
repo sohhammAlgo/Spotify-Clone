@@ -29,7 +29,6 @@ function renderTracks(songs) {
 async function getSongData() {
     let response = await fetch('songs.json');
     songs = await response.json();
-    renderTracks(songs);
     return songs;
 }
 
@@ -48,6 +47,25 @@ function playSong(url) {
     let songArtist = document.querySelector(".song-artist");
     songTitle.textContent = currentSong.name.replace(".mp3", "");
     songArtist.textContent = currentSong.artist || "_Artist unknown_";
+}
+
+function pauseSong(url){
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    let isPlaying = false;
+
+    playPauseBtn.addEventListener("click", () => {
+        if (!audio.src) return; // no song loaded
+
+        if (isPlaying) {
+            audio.pause();
+            playPauseBtn.src = "images/play.svg";
+        } else {
+            audio.play();
+            playPauseBtn.src = "images/pause.svg";
+        }
+
+        isPlaying = !isPlaying;
+    });
 }
 
 function songList() {
@@ -71,13 +89,13 @@ function songList() {
     });
 }
 
-
-
 function duration(url){
     audio.addEventListener('ontimeupdate',()=>{
-        let duration = audio.duration();
+        let duration = audio.duration;
         return duration;
     });
- }
+}
+
+
 
 main();
