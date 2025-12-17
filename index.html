@@ -45,7 +45,8 @@
                 <div class="footer">
                     <div><a href="https://www.spotify.com/jp/legal/"><span>Legal</span></a></div>
                     <div><a href="https://www.spotify.com/jp/privacy/"><span>Privacy Center</span></a></div>
-                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a></div>
+                    <div><a href="https://www.spotify.com/jp/legal/privacy-policy/"><span>Privacy Policy</span></a>
+                    </div>
                     <div><a href="https://www.spotify.com/jp/legal/cookies-policy/"><span>Cookies</span></a></div>
                     <div><a href="https://www.spotify.com/jp/legal/privacy-policy/#s3"><span>About Ads</span></a></div>
                     <div><a href="https://www.spotify.com/jp/accessibility/"><span>Accessibility</span></a></div>
@@ -58,11 +59,13 @@
                 <div class="header-left">
                     <div class="nav-buttons">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M15 6L9.70711 11.2929C9.37377 11.6262 9.20711 11.7929 9.20711 12C9.20711 12.2071 9.37377 12.3738 9.70711 12.7071L15 18"
+                            <path
+                                d="M15 6L9.70711 11.2929C9.37377 11.6262 9.20711 11.7929 9.20711 12C9.20711 12.2071 9.37377 12.3738 9.70711 12.7071L15 18"
                                 stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M9 18L14.2929 12.7071C14.6262 12.3738 14.7929 12.2071 14.7929 12C14.7929 11.7929 14.6262 11.6262 14.2929 11.2929L9 6"
+                            <path
+                                d="M9 18L14.2929 12.7071C14.6262 12.3738 14.7929 12.2071 14.7929 12C14.7929 11.7929 14.6262 11.6262 14.2929 11.2929L9 6"
                                 stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
@@ -78,7 +81,6 @@
                 <h1>Spotify Playlists</h1>
                 <div id="playlists-container">
 
-                    <!-- Card -->
                     <div class="card">
                         <div class="play-card">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
@@ -121,19 +123,37 @@
 
         <footer id="player-control">
             <div class="player-left">
-                    <div class="song-title invert">Barbaad</div>
-                    <div class="song-artist invert">Jubin Nautiyal</div>
+                <img class="album-cover" src="images/barbaad.jpg" alt="Album Cover">
+                <div class="song-info">
+                    <div class="song-title">Barbaad</div>
+                    <div class="song-artist">Jubin Nautiyal</div>
+                </div>
             </div>
-            <div class="seekbar">
-                <div class="circle"></div>
+
+            <div class="player-center">
+                <!-- Control Buttons -->
+                <div class="songbuttons">
+                    <img src="images/shuffle.svg" alt="Shuffle" title="Shuffle">
+                    <img src="images/prevsong.svg" alt="Previous">
+                    <img id="playPausebtn" src="images/play.svg" alt="Play">
+                    <img src="images/nextsong.svg" alt="Next">
+                    <img src="images/repeat.svg" alt="Repeat" title="Repeat">
+                </div>
+
+                <div class="time-seekbar-container">
+                    <span class="current-time">0:00</span>
+                    <div class="seekbar">
+                        <div class="circle"></div>
+                    </div>
+                    <span class="total-time">0:00</span>
+                </div>
             </div>
-            <div class="songbuttons">
-                <img src="images/prevsong.svg" alt="">
-                <img id="playPausebtn" src="images/play.svg" alt="">
-                <img src="images/nextsong.svg" alt="">
-            </div>
+
             <div class="player-right">
-                <img src="images/volume.svg">
+                <div class="volume">
+                    <img src="images/volume.svg" alt="Volume">
+                    <input type="range" class="volume-slider" min="0" max="100" value="50">
+                </div>
             </div>
         </footer>
     </div>
