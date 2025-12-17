@@ -1,9 +1,16 @@
+// Starting message to check if the script is running
 console.log('Starting Spotify Clone Script');
 
+// Array to store all songs data
 let songs = [];
+
+// Audio object to control music playback
 let currentSong = new Audio();
+
+// Variable for future folder use
 let currFolder;
 
+// Function to convert seconds into MM:SS format
 function secondsToMinutesSeconds(seconds) {
     if (isNaN(seconds) || seconds < 0) {
         return "00:00";
@@ -18,12 +25,14 @@ function secondsToMinutesSeconds(seconds) {
     return `${formattedMinutes}:${formattedSeconds}`;
 }
 
+// Function to fetch songs data from songs.json
 async function getSongData() {
     let response = await fetch('songs.json');
     songs = await response.json();
     return songs;
 }
 
+// Function to display song list in sidebar
 function songList() {
     const ul = document.querySelector(".songList ul");
     ul.innerHTML = "";
@@ -50,6 +59,7 @@ function songList() {
     });
 }
 
+// Function to play selected song
 const playMusic = (track, pause = false) => {
     currentSong.src = track;
     if (!pause) {
@@ -59,11 +69,11 @@ const playMusic = (track, pause = false) => {
 
     let currentSongData = songs.find(song => song.file === track);
 
-    // Update song info
+    // Update song title and artist
     document.querySelector(".song-title").textContent = currentSongData.name.replace(".mp3", "");
     document.querySelector(".song-artist").textContent = currentSongData.artist || "Artist Unknown";
 
-    // Update album cover
+    // Update album image
     const albumCover = document.querySelector(".album-cover");
     if (albumCover) {
         albumCover.src = currentSongData.image || "images/default.jpg";
@@ -75,20 +85,22 @@ const playMusic = (track, pause = false) => {
     document.querySelector(".total-time").textContent = "0:00";
 }
 
+// Main function that runs the app
 async function main() {
-    // Get the list of all the songs
+
+    // Load songs from JSON
     songs = await getSongData();
     console.log('Songs loaded:', songs);
 
-    // Display songs in playlist
+    // Show songs in sidebar
     songList();
 
-    // Load first song but don't play
+    // Load first song without playing
     if (songs.length > 0) {
         playMusic(songs[0].file, true);
     }
 
-    // Attach an event listener to play/pause button
+    // Play and pause button logic
     const playPauseBtn = document.getElementById("playPausebtn");
     playPauseBtn.addEventListener("click", () => {
         if (currentSong.paused) {
@@ -100,7 +112,7 @@ async function main() {
         }
     });
 
-    // Listen for timeupdate event
+    // Update time and seekbar while song plays
     currentSong.addEventListener("timeupdate", () => {
         const currentTime = secondsToMinutesSeconds(currentSong.currentTime);
         const duration = secondsToMinutesSeconds(currentSong.duration);
@@ -108,20 +120,19 @@ async function main() {
         document.querySelector(".current-time").textContent = currentTime;
         document.querySelector(".total-time").textContent = duration;
 
-        // Update seekbar position
         const percent = (currentSong.currentTime / currentSong.duration) * 100;
         document.querySelector(".circle").style.left = percent + "%";
         document.querySelector(".seekbar").style.setProperty('--progress', percent + '%');
     });
 
-    // Add an event listener to seekbar
+    // Click on seekbar to change song position
     document.querySelector(".seekbar").addEventListener("click", e => {
         let percent = (e.offsetX / e.target.getBoundingClientRect().width) * 100;
         document.querySelector(".circle").style.left = percent + "%";
         currentSong.currentTime = ((currentSong.duration) * percent) / 100;
     });
 
-    // Add an event listener to previous button
+    // Previous song button logic
     document.querySelector(".songbuttons img:first-child").addEventListener("click", () => {
         currentSong.pause();
         console.log("Previous clicked");
@@ -131,7 +142,7 @@ async function main() {
         }
     });
 
-    // Add an event listener to next button
+    // Next song button logic
     document.querySelector(".songbuttons img:last-child").addEventListener("click", () => {
         currentSong.pause();
         console.log("Next clicked");
@@ -141,26 +152,26 @@ async function main() {
         }
     });
 
-    // Add event listener to volume icon and slider
+    // Volume control elements
     const volumeIcon = document.querySelector(".player-right img");
     const volumeSlider = document.querySelector(".volume-slider");
 
-    // Function to update volume slider gradient
+    // Function to update volume bar color
     function updateVolumeSlider(value) {
         const percent = value;
         volumeSlider.style.background = `linear-gradient(to right, #1db954 0%, #1db954 ${percent}%, #4d4d4d ${percent}%, #4d4d4d 100%)`;
     }
 
-    // Initialize volume
+    // Set default volume
     currentSong.volume = 0.5;
     updateVolumeSlider(50);
 
+    // Change volume using slider
     volumeSlider.addEventListener("input", (e) => {
         const volume = e.target.value / 100;
         currentSong.volume = volume;
         updateVolumeSlider(e.target.value);
 
-        // Update icon based on volume
         if (volume === 0) {
             volumeIcon.src = "images/mute.svg";
         } else {
@@ -168,6 +179,7 @@ async function main() {
         }
     });
 
+    // Mute and unmute when volume icon is clicked
     volumeIcon.addEventListener("click", () => {
         if (currentSong.volume > 0) {
             currentSong.volume = 0;
@@ -183,4 +195,5 @@ async function main() {
     });
 }
 
+// Start the app
 main();
